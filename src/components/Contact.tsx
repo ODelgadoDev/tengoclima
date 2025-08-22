@@ -5,10 +5,13 @@ import emailjs from "@emailjs/browser";
 const BLUE = "#225A73";
 const ORANGE = "#F37021";
 
-/** ✅ Credenciales EmailJS (tus datos) */
+/** ✅ Credenciales EmailJS */
 const EMAILJS_PUBLIC_KEY = "bja3FEqH-DlViILbQ";
-const EMAILJS_SERVICE_ID = "service_34396kr";
-const EMAILJS_TEMPLATE_ID = "template_lrtcm3t";
+const EMAILJS_SERVICE_ID  = "service_34396kr";
+
+/** IDs de templates */
+const TEMPLATE_CLIENTE = "template_lrtcm3t";  // Auto-reply al cliente
+const TEMPLATE_NEGOCIO = "template_1w4lewr";  // Notificación interna
 
 export default function Contact() {
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -26,12 +29,45 @@ export default function Contact() {
     try {
       setSending(true);
 
-      await emailjs.sendForm(
+      // Leemos los valores del form para usarlos en ambos envíos
+      const fd = new FormData(formRef.current);
+      const vars = {
+        name: (fd.get("name") as string) || "",
+        email: (fd.get("email") as string) || "",
+        phone: (fd.get("phone") as string) || "",
+        localidad: (fd.get("localidad") as string) || "",
+        servicio: (fd.get("servicio") as string) || servicioSel || "",
+        message: (fd.get("message") as string) || "",
+        to_email: "tengoclimaweb@gmail.com",
+        subject: servicioSel || "Nuevo contacto desde el sitio",
+      };
+
+      // 1) Enviar al NEGOCIO (tú): usa todo el formulario
+      //    -> En el template pon: To email = {{to_email}}, Subject = {{servicio}} (o {{subject}})
+      const sendNegocio = emailjs.sendForm(
         EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
+        TEMPLATE_NEGOCIO,
         formRef.current,
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
+
+      // 2) Auto‑reply al CLIENTE: usa variables explícitas
+      //    -> En el template pon: To email = {{email}}, Subject = "Tu solicitud: {{servicio}}"
+      const sendCliente = emailjs.send(
+        EMAILJS_SERVICE_ID,
+        TEMPLATE_CLIENTE,
+        {
+          name: vars.name,
+          email: vars.email,
+          phone: vars.phone,
+          localidad: vars.localidad,
+          servicio: vars.servicio,
+          message: vars.message,
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
+
+      await Promise.all([sendNegocio, sendCliente]);
 
       setOkMsg("¡Gracias! Tu solicitud fue enviada. Te contactaremos pronto.");
       formRef.current.reset();
@@ -83,7 +119,7 @@ export default function Contact() {
               <input name="name" className="border rounded-lg px-3 py-2" placeholder="Nombre" required />
               <input name="phone" className="border rounded-lg px-3 py-2" placeholder="Teléfono" />
             </div>
-          {/* Columna derecha: formulario */}
+
             <input name="email" className="border rounded-lg px-3 py-2" placeholder="Email" type="email" required />
             <input name="localidad" className="border rounded-lg px-3 py-2" placeholder="Localidad (colonia/municipio)" />
 
@@ -106,9 +142,8 @@ export default function Contact() {
 
             <textarea name="message" className="border rounded-lg px-3 py-2" rows={4} placeholder="Cuéntanos tu proyecto..." />
 
-            {/* 🔒 Variables auxiliares */}
+            {/* Auxiliares para el template del negocio */}
             <input type="hidden" name="to_email" value="tengoclimaweb@gmail.com" />
-            {/* Si quisieras usar un subject separado del servicio, podrías enviar ambos: */}
             <input type="hidden" name="subject" value={servicioSel || "Nuevo contacto desde el sitio"} />
 
             <button
