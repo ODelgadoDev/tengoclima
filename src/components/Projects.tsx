@@ -4,22 +4,22 @@ const items = [
   {
     t: "Nutribif — Chihuahua",
     d: "82 módulos Canadian Solar con microinversores Hoymiles. Ahorro hasta 70%.",
-    img: "./src/assets/nutribief.jpg",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzccKVxJZwxFJY8TCQlUhLN6CoyPRuv2EaVw&s",
   },
   {
     t: "Hotel Coppel Canyon — Chihuahua",
     d: "Sistema fotovoltaico de autoconsumo para suites y áreas comunes.",
-    img: "./src/assets/hotel copper.jpg",
+    img: "https://images.trvl-media.com/lodging/11000000/10660000/10650500/10650456/50adc956.jpg?impolicy=resizecrop&rw=575&rh=575&ra=fill",
   },
   {
     t: "Planta Ford — Chihuahua",
     d: "Climatización y mantenimiento HVAC. Continuidad operativa y ahorro.",
-    img: "./src/assets/PlantaFord.jpg",
+    img: "https://noro.mx/wp-content/uploads/2023/11/planta-ford-chihuahua-cumplio-40-anos-mexico-chihuahua-1024x540.webp",
   },
   {
     t: "Residencial — Aldama",
     d: "Minisplits Inverter A+++ · 3 × 1.5 TR · Confort y eficiencia.",
-    img: "./src/assets/residencial.jpg",
+    img: "https://assets.easybroker.com/property_images/5428150/93920573/EB-TV8150.png?height=300&version=1754359306&width=450",
   },
 ];
 
