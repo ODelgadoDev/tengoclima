@@ -5,7 +5,7 @@ import emailjs from "@emailjs/browser";
 const BLUE = "#225A73";
 const ORANGE = "#F37021";
 
-/** 🔐 Rellena con tus credenciales reales de EmailJS */
+/** ✅ Credenciales EmailJS (las que pegaste) */
 const EMAILJS_PUBLIC_KEY = "bja3FEqH-DlViILbQ";
 const EMAILJS_SERVICE_ID = "service_34396kr";
 const EMAILJS_TEMPLATE_ID = "template_lrtcm3t";
@@ -20,7 +20,7 @@ export default function Contact() {
     e.preventDefault();
     setOkMsg(null);
     setErrMsg(null);
-    if (!formRef.current) return;
+    if (!formRef.current || sending) return;
 
     try {
       setSending(true);
@@ -34,7 +34,9 @@ export default function Contact() {
       formRef.current.reset();
     } catch (err) {
       console.error(err);
-      setErrMsg("Hubo un problema al enviar. Intenta de nuevo o escríbenos a tengoclima@gmail.com.");
+      setErrMsg(
+        "Hubo un problema al enviar. Intenta de nuevo o escríbenos a tengoclimaweb@gmail.com."
+      );
     } finally {
       setSending(false);
     }
@@ -55,8 +57,18 @@ export default function Contact() {
             <div className="p-4 text-sm">
               <p className="font-semibold">Oficina principal</p>
               <p>Oaxaca 27, Col. Industrial, Chihuahua, Chih.</p>
-              <p className="mt-2">📞 <a href="tel:+526144276293" className="font-semibold" style={{ color: BLUE }}>+52 614 427 6293</a></p>
-              <p>📧 <a href="mailto:tengoclima@gmail.com" className="font-semibold" style={{ color: BLUE }}>tengoclima@gmail.com</a></p>
+              <p className="mt-2">
+                📞{" "}
+                <a href="tel:+526144276293" className="font-semibold" style={{ color: BLUE }}>
+                  +52 614 427 6293
+                </a>
+              </p>
+              <p>
+                📧{" "}
+                <a href="mailto:tengoclimaweb@gmail.com" className="font-semibold" style={{ color: BLUE }}>
+                  tengoclimaweb@gmail.com
+                </a>
+              </p>
               <p className="mt-1">🕒 L–V 9:00–18:00</p>
             </div>
           </div>
@@ -84,8 +96,10 @@ export default function Contact() {
 
             <textarea name="message" className="border rounded-lg px-3 py-2" rows={4} placeholder="Cuéntanos tu proyecto..." />
 
-            {/* EmailJS leerá este campo y podrás usarlo en tu template */}
-            <input type="hidden" name="to_email" value="tengoclima@gmail.com" />
+            {/* 🔒 Variables extra útiles para el template */}
+            <input type="hidden" name="to_email" value="tengoclimaweb@gmail.com" />
+            <input type="hidden" name="reply_to" value="" />
+            <input type="hidden" name="subject" value="Nueva solicitud desde TengoClimaWeb" />
 
             <button
               type="submit"
