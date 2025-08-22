@@ -5,7 +5,7 @@ import emailjs from "@emailjs/browser";
 const BLUE = "#225A73";
 const ORANGE = "#F37021";
 
-/** ✅ Credenciales EmailJS (las que pegaste) */
+/** ✅ Credenciales EmailJS (tus datos) */
 const EMAILJS_PUBLIC_KEY = "bja3FEqH-DlViILbQ";
 const EMAILJS_SERVICE_ID = "service_34396kr";
 const EMAILJS_TEMPLATE_ID = "template_lrtcm3t";
@@ -15,6 +15,7 @@ export default function Contact() {
   const [sending, setSending] = useState(false);
   const [okMsg, setOkMsg] = useState<string | null>(null);
   const [errMsg, setErrMsg] = useState<string | null>(null);
+  const [servicioSel, setServicioSel] = useState("");
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,14 +25,17 @@ export default function Contact() {
 
     try {
       setSending(true);
+
       await emailjs.sendForm(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         formRef.current,
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
+
       setOkMsg("¡Gracias! Tu solicitud fue enviada. Te contactaremos pronto.");
       formRef.current.reset();
+      setServicioSel("");
     } catch (err) {
       console.error(err);
       setErrMsg(
@@ -79,11 +83,17 @@ export default function Contact() {
               <input name="name" className="border rounded-lg px-3 py-2" placeholder="Nombre" required />
               <input name="phone" className="border rounded-lg px-3 py-2" placeholder="Teléfono" />
             </div>
-
+          {/* Columna derecha: formulario */}
             <input name="email" className="border rounded-lg px-3 py-2" placeholder="Email" type="email" required />
             <input name="localidad" className="border rounded-lg px-3 py-2" placeholder="Localidad (colonia/municipio)" />
 
-            <select name="servicio" className="border rounded-lg px-3 py-2" defaultValue="">
+            <select
+              name="servicio"
+              className="border rounded-lg px-3 py-2"
+              defaultValue=""
+              onChange={(e) => setServicioSel(e.target.value)}
+              required
+            >
               <option value="" disabled>Tipo de servicio</option>
               <option>Climatización</option>
               <option>Energía solar</option>
@@ -96,10 +106,10 @@ export default function Contact() {
 
             <textarea name="message" className="border rounded-lg px-3 py-2" rows={4} placeholder="Cuéntanos tu proyecto..." />
 
-            {/* 🔒 Variables extra útiles para el template */}
+            {/* 🔒 Variables auxiliares */}
             <input type="hidden" name="to_email" value="tengoclimaweb@gmail.com" />
-            <input type="hidden" name="reply_to" value="" />
-            <input type="hidden" name="subject" value="Nueva solicitud desde TengoClimaWeb" />
+            {/* Si quisieras usar un subject separado del servicio, podrías enviar ambos: */}
+            <input type="hidden" name="subject" value={servicioSel || "Nuevo contacto desde el sitio"} />
 
             <button
               type="submit"
