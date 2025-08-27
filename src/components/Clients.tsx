@@ -18,10 +18,10 @@ const clientes: Item[] = [
 ];
 
 const socios: Item[] = [
-  { name: "Daikin", site: "https://www.daikin.com/", logo: "https://static.wixstatic.com/media/71f38c_045785f1de4040f08447569d98169fed~mv2.jpg" },
+  { name: "Radio Refrigeracion de Juarez", site: "https://radiorefridejuarez.com/", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzhMEVaYo8vr3EaKvm0AnGVLFTdbcyjYKawg&s" },
   { name: "York", site: "https://www.york.com/", logo: "https://climaproyectos.com.mx/wp-content/uploads/2019/01/York-logo.jpg" },
   { name: "Trane", site: "https://www.trane.com/", logo: "https://pcbqro.com/wp-content/uploads/2019/04/LOGO-TRANE.png" },
-  { name: "LG", site: "https://www.lg.com/", logo: "https://images.icon-icons.com/2699/PNG/512/lg_logo_icon_170264.png" },
+  { name: "MISELEC", site: "https://miscelec.com/", logo: "https://images.crunchbase.com/image/upload/c_pad,h_256,w_256,f_auto,q_auto:eco,dpr_1/x4khmkxxkftlubnori5q" },
   { name: "Midea", site: "https://www.midea.com/", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Midea.svg/1200px-Midea.svg.png" },
   { name: "Carrier", site: "https://www.carrier.com/", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Logo_of_the_Carrier_Corporation.svg/2560px-Logo_of_the_Carrier_Corporation.svg.png" },
   { name: "Canadian Solar", site: "https://www.canadiansolar.com/", logo: "https://suncore.com.mx/wp-content/uploads/2021/04/logo-canadian-solar.png" },
